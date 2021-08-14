@@ -19,16 +19,26 @@ const server = http.createServer((req, res) => {
                    </body>`);
         res.write('</html>');
         return res.end();
-    }
+    };
+
     if (url === '/message' && method === 'POST') {
+        const body = [];
+        req.on('data', (chunk) => {
+            console.log(chunk);
+            body.push(chunk);
+        });
+
+        req.on('end', () => {
+            const parsedBody = Buffer.concat(body).toString();
+            console.log(parsedBody);
+        });
+
         fs.writeFileSync('message.txt', 'DUMMY');
         res.statusCode = 302;
         res.setHeader('Location', '/');
+
         return res.end();
     }
-    console.log(req.url, req.method, req.headers);
-    res.setHeader('Content-Type','text/html');
-    
 });
 
 server.listen(8000);
