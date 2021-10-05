@@ -37,7 +37,30 @@ const getDogPic = async () => {
         console.log('Random Dog image saved!');
     } catch (err) {
         console.log(err);
+        throw err;
     }
+    return 'Finished!';
 };
 
-getDogPic();
+(async () => {
+    try {
+        console.log('Line 1');
+        const x = await getDogPic();
+        console.log(x);
+        console.log('Line 2');
+    } catch (err) {
+        console.log('Error!');
+    }
+})();
+
+/*
+console.log('Line 1');
+getDogPic()
+    .then((statusMessage) => {
+        console.log(statusMessage);
+    })
+    .catch((err) => {
+        console.log('Error!');
+    });
+console.log('Line 2');
+*/
